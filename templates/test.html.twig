@@ -1,0 +1,233 @@
+<!-- Modal de Ajout d'hébergement -->
+<div class="modal fade" id="hebergementNewModal" tabindex="-1" aria-labelledby="hebergementModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="hebergementModalLabel">Ajout d'un hébergement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ path('hebergement_new') }}" method="POST">
+                    <input type="number" step="any" name="id" id="newIdHebergement">
+                    <div class="mb-3">
+                        <label class="form-label">Nom de l'hébergement</label>
+                        <input type="text" class="form-control" id="newNomHebergement" name="nom_hebergement">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Lieu de l'hébergement</label>
+                        <input type="text" class="form-control" id="newLieuHebergement" name="lieu_hebergement">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Date de Début</label>
+                        <input type="date" class="form-control" id="newDateDebutHebergement" name="date_debut">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Date de Fin</label>
+                        <input type="date" class="form-control" id="newDateFinHebergement" name="date_fin">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Coût de l'hébergement (en Euro)</label>
+                        <input type="number" step="any" class="form-control" id="newCoutHebergement" name="cout_hebergement">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="acheve" class="form-label">Sélection du voyage</label>
+                        <select class="form-select" id="voyageHebergement" name="voyage">
+                            {% for x in voyages %}
+                                <option {% if x.id == voyage.id %}selected{% endif %} 
+                                    value="{{x.id}}">
+                                    #{{x.id}} | 
+                                    {{x.tourist}} -  
+                                    [{{x.dateDebut|date_format("EE dd MMMM yyyy")}}]
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modifier Voyage</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Ajout de prestation -->
+<div class="modal fade" id="prestationNewModal" tabindex="-1" aria-labelledby="prestationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="prestationModalLabel">Ajout d'une prestation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ path('prestation_new') }}" method="POST">
+                    <input type="number" step="any" name="id" id="newIdPrestation">
+                    <div class="mb-3">
+                        <label class="form-label">Prestation</label>
+                        <input type="text" class="form-control" id="newPrestation" name="prestation">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Lieu</label>
+                        <input type="text" class="form-control" id="newLieuPrestation" name="lieu_prestation">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Date de préstation</label>
+                        <input type="date" class="form-control" id="newDatePrestation" name="date_prestation">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Coût de la prestation (en Euro)</label>
+                        <input type="number" step="any" class="form-control" id="newCoutPrestation" name="cout_prestation">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="acheve" class="form-label">Sélection du voyage</label>
+                        <select class="form-select" id="voyageHebergement" name="voyage">
+                            {% for x in voyages %}
+                                <option {% if x.id == voyage.id %}selected{% endif %} 
+                                    value="{{x.id}}">
+                                    #{{x.id}} | 
+                                    {{x.tourist}} -  
+                                    [{{x.dateDebut|date_format("EE dd MMMM yyyy")}}]
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modifier la Préstation</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Ajout de transport -->
+<div class="modal fade" id="transportNewModal" tabindex="-1" aria-labelledby="transportModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="transportModalLabel">Ajout d'un transport</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ path('transport_new') }}" method="POST">
+                    <input type="number" step="any" name="id" id="newIdTransport">
+                    <div class="mb-3">
+                        <label class="form-label">Primus</label>
+                        <div class="row">
+                            <input type="text"  class="form-control md-2" id="newPrimusTransport" name="primus_transport">
+                            <input type="date" class="form-control md-2" id="newDatePrimusTransport" name="date_primus_transport">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Terminus</label>
+                        <div class="row">
+                            <input type="text"  class="form-control col-md-2" id="newTerminusTransport" name="terminus_transport">
+                            <input type="date" class="form-control col-md-2" id="newDateTerminusTransport" name="date_terminus_transport">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Nombre de kilomètre (en Km)</label>
+                        <input type="number" step="any" class="form-control" id="newNombreKm" name="nombre_km">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Litre de carburant</label>
+                        <input type="number" step="any" class="form-control" id="newNombreLitre" name="nombre_litre">
+                    </div>
+                    <input formnovalidate* type="number" step="any" name="" id="">
+                    <div class="mb-3">
+                        <label class="form-label">Prix du litre</label>
+                        <input type="number" step="any" class="form-control" id="newPrixLitre" name="prix_litre">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Coût de transport (en Euro)</label>
+                        <input type="number" step="any" class="form-control" id="newCoutTransport" name="cout_transport">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="acheve" class="form-label">Sélection du voyage</label>
+                        <select class="form-select" id="voyageHebergement" name="voyage">
+                            {% for x in voyages %}
+                                <option {% if x.id == voyage.id %}selected{% endif %} 
+                                    value="{{x.id}}">
+                                    #{{x.id}} | 
+                                    {{x.tourist}} -  
+                                    [{{x.dateDebut|date_format("EE dd MMMM yyyy")}}]
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Modifier la Préstation</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Ajout de vol -->
+<div class="modal fade" id="volnewModal" tabindex="-1" aria-labelledby="volModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="volModalLabel">Ajout d'un vol</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ path('vol_new') }}" method="POST">
+                    <input type="number" step="any" name="id" id="newIdVol">
+                    <div class="mb-3">
+                        <label class="form-label">Compagnie aérienne</label>
+                        <input type="text" class="form-control" id="newAgenceVol" name="agence_vol">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Réference du vol</label>
+                        <input type="text" class="form-control" id="newReferenceVol" name="ref_vol">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Aéroport de départ</label>
+                        <div class="row">
+                            <input type="text"  class="form-control md-2" id="newPrimusVol" name="primus_vol">
+                            <input type="date" class="form-control md-2" id="newDatePrimusVol" name="date_primus_vol">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Aéroport de destination</label>
+                        <input type="text"  class="form-control col-md-2" id="newTerminusVol" name="terminus_vol">
+                        <input type="date" class="form-control col-md-2" id="newDateTerminusVol" name="date_terminus_vol">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Coût de vol (en Euro)</label>
+                        <input type="number" step="any" class="form-control" id="newCoutVol" name="cout_vol">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="acheve" class="form-label">Sélection du voyage</label>
+                        <select class="form-select" id="voyageVol" name="voyage">
+                            {% for x in voyages %}
+                                <option {% if x.id == voyage.id %}selected{% endif %} 
+                                    value="{{x.id}}">
+                                    #{{x.id}} | 
+                                    {{x.tourist}} -  
+                                    [{{x.dateDebut|date_format("EE dd MMMM yyyy")}}]
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modifier le vol</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

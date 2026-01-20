@@ -1,0 +1,118 @@
+<nav class="navbar navbar-expand-lg topnav-glass shadow-sm">
+    <div class="topnav-container container-fluid">
+
+        <!-- Logo / App name -->
+        {# <a class="navbar-brand fw-bold" href="{{ path('dashboard') }}">
+            🌍 VoyageCotation
+        </a> #}
+
+
+        <a class="top-brand navbar-brand fw-bold sidebar-brand" href="{{ path('dashboard') }}">
+            <strong>
+                <div class="logo-icons">
+                    <i class="fa-solid fa-euro"></i>
+                    <i class="fa-solid fa-coins"></i>
+                </div>
+            </strong>
+        </a>
+        <div id="search-btn" class='search-input'>
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input class="form-control" placeholder='Rechercher ici' type="search" oninput="" name="search" id="search">
+        </div>
+
+        <!-- Toggle mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="topNav">
+
+            <!-- Left menu (optionnel) -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('dashboard') }}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('voyages_index') }}">Voyages</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_users') }}">Utilisateurs</a>
+                </li>
+            </ul>
+
+            <!-- Right menu -->
+            <ul class="navbar-nav align-items-center">
+
+                <!-- Theme toggle -->
+                <li class="nav-item me-3">
+                    <button id="themeToggle" class="btn btn-sm btn-theme">
+                        🌙
+                    </button>
+                </li>
+
+                {# <li class="nav-item dropdown me-3">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center gap-1"
+                    href="#" role="button" data-bs-toggle="dropdown">
+                        🌐 {{ app.request.locale|upper }}
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                        <li>
+                            <a class="dropdown-item {% if app.request.locale == 'fr' %}active{% endif %}"
+                            href="{{ path('change_language', { locale: 'fr' }) }}">
+                                🇫🇷 Français
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item {% if app.request.locale == 'en' %}active{% endif %}"
+                            href="{{ path('change_language', { locale: 'en' }) }}">
+                                🇬🇧 English
+                            </a>
+                        </li>
+                    </ul>
+                </li> #}
+
+
+                <!-- User dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center gap-2"
+                       href="#" role="button" data-bs-toggle="dropdown">
+                        <span class="user-avatar">
+                            <img src="{% if app.user is not null %}/uploads/profiles/{{app.user.getProfil()}}{% endif %}" style="width : 40px; height : 40px; object-fit: cover; border-radius: 50%">
+                        </span>
+                        {# <span class="fw-semibold"> #}
+                            {# {{ app.user.username }} #}
+                        {# </span> #}
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+                        <li class="dropdown-header small text-muted">
+                            Compte utilisateur
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                ✏️ Modifier le profil
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                ⚙️ Paramètres
+                            </a>
+                        </li>
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li>
+                            <a class="dropdown-item text-danger" href="{{ path('app_logout') }}">
+                                🚪 Déconnexion
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>

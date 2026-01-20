@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Application Voyage{% endblock %}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {# Bootstrap #}
+    <link href="{{ asset('/styles/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/styles/font-awesome.all.css') }}" rel="stylesheet">
+    <link href="{{ asset('/styles/app.css') }}" rel="stylesheet">
+    {# <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> #}
+
+
+    {% block styles %}{% endblock %}
+</head>
+<body>
+
+    {% include 'partials/topnav.html.twig' %}
+    {% include 'partials/navbar.html.twig' %}
+    
+
+    <main>
+            <div style="margin-top:50px">
+            {% include 'message/flash.html.twig' %} 
+            </div>
+            <div class="main-container container mt-4">
+                {% block body %}{% endblock %}
+            </div>
+    </main>
+
+    <script src="{{ asset('/script/jquery.js') }}"></script>
+    <script src="{{ asset('/script/chart.js') }}"></script>
+    <script src="{{ asset('/script/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('/script/js/jquery.js') }}"></script>
+    <script src="{{ asset('/script/script.js') }}"></script>
+
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+
+        function addData() {
+            var theme = localStorage.getItem('theme');
+            // alert(darkMode)
+
+            if (theme === 'dark') {
+            gridLine = '#ffffff3c';
+            titleColor = '#EFF0F6';
+            } else {
+            gridLine = '#EEEEEE';
+            titleColor = '#171717';
+            }
+
+            if (charts.length != 0) {
+                for (let index = 0; index < charts.length; index++) {
+                    charts[index].options.scales.x.grid.color = gridLine;
+                    charts[index].options.scales.y.grid.color = gridLine;
+                    charts[index].options.plugins.title.color = titleColor;
+                    charts[index].options.plugins.legend.labels.color = titleColor;
+                    charts[index].options.scales.y.ticks.color = titleColor;
+                    charts[index].options.scales.x.ticks.color = titleColor;
+                    charts[index].update();
+                }
+            }
+        }
+    </script>
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            toggle.textContent = '☀️';
+        }
+
+        toggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            toggle.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            addData()
+        });
+
+        
+
+
+        // JavaScript mis à jour pour synchroniser le topnav avec le sidebar
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const toggleBtn = document.querySelector('.toggle-nav');
+            const topnav = document.querySelector('.topnav-glass');
+            
+            // Fonctions utilitaires
+            const Storage = {
+                get: (key) => {
+                    try {
+                        const item = localStorage.getItem(key);
+                        return item ? JSON.parse(item) : null;
+                    } catch {
+                        return null;
+                    }
+                },
+                set: (key, value) => {
+                    localStorage.setItem(key, JSON.stringify(value));
+                }
+            };
+            
+            // Fonction pour mettre à jour le topnav
+            function updateTopnav() {
+                if (!topnav) return;
+                
+                const isCompact = sidebar.classList.contains('sidebar-compact');
+                const isMobile = window.innerWidth <= 768;
+                
+                if (isMobile) {
+                    // Mode mobile
+                    topnav.style.width = '100%';
+                } else if (isCompact) {
+                    // Mode desktop compact
+                    topnav.style.width = 'calc(100vw - 150px)';
+                } else {
+                    // Mode desktop étendu
+                    topnav.style.width = 'calc(100vw - 260px)';
+                }
+            }
+            
+            // Récupérer et appliquer l'état sauvegardé
+            const savedPrefs = Storage.get('sidebarPreferences');
+            if (savedPrefs && savedPrefs.isCompact && window.innerWidth > 768) {
+                sidebar.classList.add('sidebar-compact');
+                if (toggleBtn) {
+                    toggleBtn.querySelector('.nav-label').textContent = 'Étendre';
+                }
+            }
+            
+            // Mettre à jour le topnav initial
+            updateTopnav();
+            
+            // Gestion du bouton toggle
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Uniquement en desktop
+                    if (window.innerWidth <= 768) return;
+                    
+                    const isCompact = sidebar.classList.contains('sidebar-compact');
+                    
+                    if (isCompact) {
+                        // Étendre
+                        sidebar.classList.remove('sidebar-compact');
+                        this.querySelector('.nav-label').textContent = 'Réduire';
+                        Storage.set('sidebarPreferences', { isCompact: false });
+                    } else {
+                        // Réduire
+                        sidebar.classList.add('sidebar-compact');
+                        this.querySelector('.nav-label').textContent = 'Étendre';
+                        Storage.set('sidebarPreferences', { isCompact: true });
+                    }
+                    
+                    // Mettre à jour le topnav après le changement
+                    setTimeout(updateTopnav, 50); // Petit délai pour la transition
+                });
+            }
+            
+            // Gestion responsive
+            const handleResize = () => {
+                if (window.innerWidth <= 768) {
+                    // Mode mobile - toujours étendu
+                    sidebar.classList.remove('sidebar-compact');
+                    if (toggleBtn) {
+                        toggleBtn.querySelector('.nav-label').textContent = 'Réduire';
+                    }
+                } else {
+                    // Mode desktop - restaurer les préférences
+                    const savedPrefs = Storage.get('sidebarPreferences');
+                    if (savedPrefs && savedPrefs.isCompact) {
+                        sidebar.classList.add('sidebar-compact');
+                        if (toggleBtn) {
+                            toggleBtn.querySelector('.nav-label').textContent = 'Étendre';
+                        }
+                    } else {
+                        sidebar.classList.remove('sidebar-compact');
+                        if (toggleBtn) {
+                            toggleBtn.querySelector('.nav-label').textContent = 'Réduire';
+                        }
+                    }
+                }
+                
+                // Toujours mettre à jour le topnav
+                updateTopnav();
+            };
+            
+            window.addEventListener('resize', handleResize);
+            handleResize(); // Initialisation
+            
+            // Observer les changements de classe du sidebar (optionnel)
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.attributeName === 'class') {
+                        updateTopnav();
+                    }
+                });
+            });
+            
+            observer.observe(sidebar, { attributes: true });
+        });
+                
+        </script>
+
+
+    {% block javascripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!-- Dans votre template Flask -->
+<div class="sidebar sidebar-state-1 d-flex flex-column">
+    <div class="sidebar-header text-center py-4">
+        <a class="sidebar-brand" href="{{ path('dashboard') }}">
+            <strong>
+                <div class="logo-icons">
+                    <i class="fa-solid fa-euro"></i>
+                    <i class="fa-solid fa-coins"></i>
+                </div>
+                <hr>
+                <span class="logo-text">Cotation</span>
+            </strong>
+        </a>
+    </div>
+
+    <ul class="nav flex-column sidebar-nav flex-grow-1">
+        <li class="nav-item menu">
+            <a class="nav-link toggle-nav" href="#">
+                <i class="fa-solid fa-bars"></i>
+                <span class="nav-label">Réduire</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {% if app.request.attributes.get('_route') == 'dashboard' %}active{% endif %}"
+               href="{{ path('dashboard') }}">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span class="nav-label">Dashboard</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {% if 'voyage' in app.request.attributes.get('_route') %}active{% endif %}"
+               href="{{ path('voyages_index') }}">
+                <i class="fa-solid fa-map"></i>
+                <span class="nav-label">Voyages</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {% if 'itineraire' in app.request.attributes.get('_route') %}active{% endif %}"
+               href="{{ path('itineraire_list') }}">
+                <i class="fa-solid fa-car"></i>
+                <span class="nav-label">Itinéraires</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {% if app.request.attributes.get('_route') == 'import_excel' %}active{% endif %}"
+               href="{{ path('import_excel') }}">
+                <i class="bi bi-file-earmark-excel"></i>
+                <span class="nav-label">Import</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="sidebar-footer p-3 text-center">
+        {# {% if current_user.is_authenticated %}
+            <small class="text-white d-block mb-2">{{ current_user.email }}</small>
+            <a class="btn btn-outline-light btn-sm w-100" href="{{ path('logout') }}">Déconnexion</a>
+        {% endif %} #}
+    </div>
+</div>

@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+{% block title %}Dashboard{% endblock %}
+{% block javascripts %}
+    <script>
+    {# const ctx = document.getElementById('voyageChart');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai'],
+            datasets: [{
+                label: 'Montant cotations (€)',
+                data: [1200000, 2500000, 1800000, 3200000, 4100000],
+            }]
+        }
+    }); #}
+    chart("bar", ['Jan', 'Fév', 'Mar', 'Avr', 'Mai'], [1200000, 2500000, 1800000, 3200000, 4100000], "chartArea",null ,  '€')
+    </script>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid mt-4">
+
+    <h3 class="mb-4 fw-bold">Dashboard – Cotation Voyages</h3>
+
+    <!-- KPIs -->
+    <div class="row g-4">
+
+        <!-- Somme non payée -->
+        <div class="col-xl-3 col-md-6">
+            <a href="#"  data-bs-toggle="modal" data-bs-target="#addVoyageModal" class="text-decoration-none text-center add-card card kpi-card border-violet shadow-sm">
+                <div class="card-body">
+                    <div class="add-icon">+</div>
+                    <h6 class="text-muted">Ajouter un voyage</h6>
+                </div>
+            </a>
+        </div>
+
+        <!-- Modal d'ajout de voyage -->
+        <div class="modal fade" id="addVoyageModal" tabindex="-1" aria-labelledby="addVoyageModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addVoyageModalLabel">Ajouter un Nouveau Voyage</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {# <form action="" method="POST"> #}
+                        <form action="{{ path('voyage_add') }}" method="POST">
+                            <div class="mb-3">
+                                <label for="tourist" class="form-label">Nom du Touriste</label>
+                                <input type="text" class="form-control" id="tourist" name="tourist" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="date_debut" class="form-label">Date de Début</label>
+                                <input type="datetime-local" class="form-control" id="date_debut" name="date_debut" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="acheve" class="form-label">Statut</label>
+                                <select class="form-select" id="acheve" name="acheve">
+                                    <option value="0">En cours</option>
+                                    <option value="1">Terminé</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="paye" class="form-label">Paiement</label>
+                                <select class="form-select" id="paye" name="paye">
+                                    <option value="0">En attente</option>
+                                    <option value="1">Payé</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Ajouter Voyage</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card kpi-card border-violet shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Somme non payée</h6>
+                    <h3 class="fw-bold text-danger">12 500 000 €</h3>
+                    <small>Voyages en cours</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Somme payée -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card kpi-card success shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Somme payée</h6>
+                    <h3 class="fw-bold text-success">8 200 000 €</h3>
+                    <small>Voyages validés</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nombre de voyages -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card kpi-card primary shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Voyages en cours</h6>
+                    <h3 class="fw-bold">18</h3>
+                    <small>Dossiers actifs</small>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Charts & Résumé -->
+    <div class="row mt-5">
+
+        <!-- Chart -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header fw-bold">
+                    <i style="color : darkred; margin-right: 10px" class="fa-solid fa-pie-chart"></i> Évolution des cotations
+                    <div class="chart-btn">
+                        <button class="btn" onclick="chart('line', ['Jan', 'Fév', 'Mar', 'Avr', 'Mai'], [1200000, 2500000, 1800000, 3200000, 4100000], 'chartArea',null ,  '€')">
+                            Courbe
+                        </button>
+                        <button class="btn" onclick="chart('pie', ['Jan', 'Fév', 'Mar', 'Avr', 'Mai'], [1200000, 2500000, 1800000, 3200000, 4100000], 'chartArea',null ,  '€')">
+                            Camembert
+                        </button>
+                        <button class="btn" onclick="chart('bar', ['Jan', 'Fév', 'Mar', 'Avr', 'Mai'], [1200000, 2500000, 1800000, 3200000, 4100000], 'chartArea',null ,  '€')">
+                            Histogramme
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body chartArea" style="height: 300px;" id="chartArea">
+                </div>
+            </div>
+        </div>
+
+        <!-- Résumé -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header fw-bold">
+                    📌 Résumé global
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Total voyages</span>
+                            <strong>25</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Total encaissé</span>
+                            <strong class="text-success">820 €</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Reste à payer</span>
+                            <strong class="text-danger">125 €</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Taux de paiement</span>
+                            <strong>39 %</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

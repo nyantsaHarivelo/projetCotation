@@ -1,0 +1,6 @@
+Invalid credentials.: Nom d’utilisateur ou mot de passe incorrect.
+Username could not be found.: Ce compte n’existe pas.
+Account is disabled.: Votre compte est désactivé.
+Account is locked.: Votre compte est temporairement bloqué.
+Account has expired.: Votre compte a expiré.
+Credentials have expired.: Votre mot de passe a expiré.

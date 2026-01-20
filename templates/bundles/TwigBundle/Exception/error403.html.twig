@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>403 – Accès refusé</title>
+
+    <link rel="icon" href="{{ asset('images/logo.png') }}">
+    <link href="{{ asset('styles/error.css') }}" rel="stylesheet">
+    <style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: url("../../images/mpihira gasy.jpg") center/cover no-repeat fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    position: relative;
+}
+
+/* Assombrir l'image pour la lisibilité */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(#303148, #a88e4d);
+    backdrop-filter: blur(2px);
+}
+
+/* Contenu central */
+.content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 40px 50px;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    max-width: 520px;
+    animation: fadeIn 0.8s ease;
+}
+
+.content h1 {
+    font-size: 96px;
+    font-weight: 800;
+    color: #f5c16c; /* jaune orangé élégant */
+    margin-bottom: 10px;
+}
+
+.content h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.content p {
+    font-size: 16px;
+    color: #ddd;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* Bouton */
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #f5c16c, #e59b2a);
+    color: #000;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(245,193,108,0.4);
+}
+
+img {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100vw;
+    opacity: .5;
+    object-fit: cover;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+    <img src="img/Mpihira gasy.png" alt="">
+    <div class="content">
+        <h1>403</h1>
+        <h2>Accès refusé</h2>
+
+        <p>
+            Vous n’avez pas les droits nécessaires pour accéder à cette page.
+        </p>
+
+        <a href="{{ path('dashboard') }}" class="btn">
+            Retour au tableau de bord
+        </a>
+    </div>
+
+</body>
+</html>

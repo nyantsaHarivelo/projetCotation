@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des voyages{% endblock %}
+
+{% block body %}
+<h1 class="mb-4">Voyages</h1>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Itineraire</th>
+            <th>Nombre de Km</th>
+            <th>: par 100</th>
+            <th>Consommation au 100 Km</th>
+            <th>Nombre de litres</th>
+            <th>Prix au litre</th>
+            <th>Coût du carburant</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in itineraire %}    
+            <tr>
+                <td>{{i.id}}</td>
+                <td>{{i.itineraire}}</td>
+                <td>{{i.nbKm}} </td>
+                <td>{{i.divParCent}} </td>
+                <td>{{i.consommation}} </td>
+                <td>{{i.nbL }}</td>
+                <td>{{i.pxL}} </td>
+                <td>{{ i.coutCarburant }} </td>
+                <td>
+                    <a href="#" class="btn btn-sm btn-info">Voir</a>
+                    <a href="#" class="btn btn-sm btn-warning">Modifier</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
